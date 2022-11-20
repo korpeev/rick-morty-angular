@@ -1,0 +1,11 @@
+<header class="bg-neutral-700 text-white py-5 px-2 text-xl flex justify-between space-x-3">
+  <span class="font-bold text-2xl cursor-pointer">
+    <a routerLink="/">Rick & Morty</a>
+  </span>
+  <div class="flex items-center space-x-2">
+    <button (click)="goTo('/')" mat-flat-button class="bg-white">Characters</button>
+    <button (click)="goTo('/episode')" mat-flat-button class="bg-white">Episodes</button>
+    <button [matBadge]="favoritesCount" [matBadgeHidden]="favoritesCount === 0" (click)="goTo('/favorite')" mat-flat-button class="bg-white">Favorites</button>
+  </div>
+  <div></div>
+</header>

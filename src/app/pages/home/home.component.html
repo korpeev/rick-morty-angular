@@ -1,0 +1,21 @@
+<div *ngIf="isLoading" class="flex items-center justify-center h-screen">
+  <mat-spinner color="primary"></mat-spinner>
+</div>
+<div class="flex justify-center bg-transparent my-5">
+  <mat-paginator (page)="changePage($event)" [length]="getTotalPagesLength" [pageSize]="pageSize"></mat-paginator>
+</div>
+<div class="flex justify-center">
+  <app-filter></app-filter>
+</div>
+<div class="grid grid-cols-4 gap-5 mt-5">
+  <app-card-character *ngFor="let character of getCharacters | async" [character]="character">
+    <div class="flex justify-around">
+      <button mat-raised-button class="bg-neutral-700 text-white">View</button>
+      <button mat-raised-button class="bg-red-500 text-white" (click)="addFavorite(character)">
+        {{hasFavorites(character) ? 'Delete' : 'Add favorite'}}
+      </button>
+    </div>
+  </app-card-character>
+</div>
+
+

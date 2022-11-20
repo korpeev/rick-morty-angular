@@ -1,0 +1,17 @@
+<div class="max-w-[320px] h-[500px] flex flex-col justify-between p-2 shadow-2xl shadow-zinc-400 rounded">
+  <mat-card-title  class="text-xl">{{character.name}}</mat-card-title>
+  <img [src]="character.image" alt="img"/>
+  <div class="flex flex-col">
+    <span class="text-md">Status: {{character.status}}</span>
+    <span class="text-md">Gender: {{character.gender}}</span>
+    <span class="text-md">Race: {{character.species}}</span>
+    <span class="text-md">Origin: <a>{{character.origin.name}}</a></span>
+  </div>
+  <mat-card-actions *ngIf="actions.childNodes.length === 0" class="flex justify-between">
+    <button mat-raised-button class="bg-neutral-700 text-white">View</button>
+    <button mat-raised-button class="bg-red-500 text-white">Add favorites</button>
+  </mat-card-actions>
+  <div #actions>
+    <ng-content></ng-content>
+  </div>
+</div>
