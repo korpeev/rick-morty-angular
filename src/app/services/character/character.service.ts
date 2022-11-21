@@ -3,7 +3,7 @@ import { ApiService } from '@services/api.service';
 import { Character } from '@models/characters.interface';
 import { Pagination, Response } from '@models/common.inferface';
 import { HttpParams } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,10 @@ import { BehaviorSubject } from 'rxjs';
 export class CharacterService {
   isLoading$ = new BehaviorSubject(false);
   characters$ = new BehaviorSubject<Character[]>([]);
+  filteredCharacters$ = new BehaviorSubject<Character[]>([]);
+  isFiltering: boolean = false;
   pagination$: Pagination = {} as Pagination;
+  searchTerm$ = new Subject<string>();
   constructor(private apiService: ApiService) {}
 
   fetchCharacters(page?: number) {
@@ -23,8 +26,22 @@ export class CharacterService {
       this.isLoading$.next(false);
     });
   }
+  searchCharacter(value: string) {
+    return this.getCharacters.pipe(
+      map(characters => characters.filter(character => character.name.toLowerCase().includes(value.toLowerCase())))
+    );
+  }
+  orderBy(value: string) {
+    const orderedItems = this.getCharacters.value
+      .slice()
+      .sort((a, b) => (value === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)));
+    this.getCharacters.next(orderedItems);
+  }
   get getCharacters() {
-    return this.characters$;
+    return this.isFiltering ? this.filteredCharacters$ : this.characters$;
+  }
+  set setFiltering(value: boolean) {
+    this.isFiltering = value;
   }
   get getPageSize() {
     return Math.floor(this.pagination$.count / this.pagination$.pages);
