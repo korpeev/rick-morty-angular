@@ -9,7 +9,10 @@ export interface Pagination {
   next: string | null;
   prev: string | null;
 }
-export type FilterFields = 'gender' | 'status';
+export interface Params {
+  page?: number;
+  name?: string;
+}
 export type FilterTypes = {
   gender: 'Female' | 'Male' | 'All';
   status: 'Alive' | 'Dead' | 'unknown' | 'All';

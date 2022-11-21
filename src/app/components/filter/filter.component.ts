@@ -19,7 +19,7 @@ export class FilterComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {}
   changeFilterType() {
-    this.filterService.filterType = this.filterType;
+    this.filterService.setFilterType = this.filterType;
     this.filterService.filterBy();
   }
   orderBy(value: string) {

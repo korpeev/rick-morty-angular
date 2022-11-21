@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   characters: Character[] = [];
   constructor(private characterService: CharacterService, private favoriteService: FavoriteService) {}
   ngOnInit(): void {
-    this.characterService.fetchCharacters();
+    this.characterService.fetchCharacters({});
     this.characterService.isLoading$.subscribe();
     merge(
       this.characterService.characters$,
@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
     });
   }
   changePage(event: PageEvent) {
-    this.characterService.fetchCharacters(event.pageIndex + 1);
+    this.characterService.fetchCharacters({ page: event.pageIndex + 1 });
   }
   addFavorite(character: Character) {
     this.favoriteService.onAddFavorite(character);

@@ -7,7 +7,7 @@ import { Character } from '@models/characters.interface';
   providedIn: 'root',
 })
 export class FilterService {
-  filterType: FilterTypes = {
+  private filterType: FilterTypes = {
     gender: 'All',
     status: 'All',
   };
@@ -20,5 +20,8 @@ export class FilterService {
       return acc.filter(item => item[key as keyof Pick<Character, 'gender' | 'status'>] === value || value === 'All');
     }, this.characterService.characters$.value);
     this.characterService.filteredCharacters$.next(newFilteredItems);
+  }
+  set setFilterType(filterType: FilterTypes) {
+    this.filterType = filterType;
   }
 }
