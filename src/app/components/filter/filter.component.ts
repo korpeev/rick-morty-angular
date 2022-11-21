@@ -13,6 +13,7 @@ export class FilterComponent implements OnInit, OnDestroy {
     gender: 'All',
     status: 'All',
   };
+  isOpenAutocomplete: boolean = false;
   orderType: string = 'asc';
 
   constructor(private filterService: FilterService, private characterService: CharacterService) {}
@@ -28,6 +29,12 @@ export class FilterComponent implements OnInit, OnDestroy {
   onSearch(event: Event) {
     const searchTerm = (event.target as HTMLInputElement).value;
     this.characterService.searchTerm$.next(searchTerm);
+  }
+  get characters() {
+    return this.characterService.getCharacters;
+  }
+  get isLoading() {
+    return this.characterService.isLoading$;
   }
   resetFilter() {
     this.filterType = {

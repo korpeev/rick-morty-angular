@@ -1,11 +1,13 @@
-<div *ngIf="isLoading | async" class="flex items-center justify-center h-screen">
-  <mat-spinner color="primary"></mat-spinner>
-</div>
+
 <div class="flex justify-center bg-transparent my-5">
   <mat-paginator (page)="changePage($event)" [length]="getTotalPagesLength" [pageSize]="pageSize"></mat-paginator>
 </div>
 <div class="flex justify-center">
   <app-filter></app-filter>
+</div>
+<div *ngIf="isLoading | async" class="flex items-center justify-center h-screen mt-5">
+
+  <mat-spinner color="primary"></mat-spinner>
 </div>
 <div class="grid grid-cols-4 gap-5 mt-5">
   <app-card-character *ngFor="let character of characters" [character]="character">

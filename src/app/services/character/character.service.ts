@@ -22,11 +22,17 @@ export class CharacterService {
     this.currentPageIndex = params.page || 1;
     const addedParams = new HttpParams().set('page', params.page || 1).set('name', params.name || '');
     this.isLoading$.next(true);
-    this.apiService.getData<Response<Character>>('character', addedParams).subscribe(data => {
-      this.characters$.next(data.results);
-      this.pagination$ = data.info;
-      this.isLoading$.next(false);
-    });
+    this.apiService.getData<Response<Character>>('character', addedParams).subscribe(
+      data => {
+        this.characters$.next(data.results);
+        this.pagination$ = data.info;
+        this.isLoading$.next(false);
+      },
+      error => {
+        this.isLoading$.next(false);
+        this.characters$.next([]);
+      }
+    );
   }
   searchCharacter(value: string) {
     this.fetchCharacters({ name: value, page: this.currentPageIndex });

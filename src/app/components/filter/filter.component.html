@@ -33,7 +33,20 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Search by name</mat-label>
-        <input matInput  (input)="onSearch($event)"/>
+        <input matInput (input)="onSearch($event)" [matAutocomplete]="auto"/>
+        <mat-autocomplete #auto="matAutocomplete" >
+            <div class="h-5 w-5" *ngIf="isLoading | async; else elseBlock">
+              <mat-spinner color="primary"></mat-spinner>
+            </div>
+            <ng-template [ngIf]="isOpenAutocomplete" #elseBlock>
+              <mat-option *ngFor="let character of characters | async" [value]="character">
+                <div class="flex items-center gap-5">
+                  <img mat-card-avatar [src]="character.image" class="w-5 h-5 rounded-full" />
+                  <span>{{ character.name }}</span>
+                </div>
+              </mat-option>
+            </ng-template>
+        </mat-autocomplete>
       </mat-form-field>
       <button (click)="resetFilter()" mat-raised-button class="h-[40px]">Reset Filter</button>
     </div>
